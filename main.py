@@ -42,14 +42,16 @@ def main():
     input_file_name = os.path.basename(args.inputFile).rsplit('.')[0]
     output_path = args.outputPath
 
-    if not os.path.exists(args.outputPath):
+    if output_path == None:
+        output_path = os.getcwd()
+    if not os.path.exists(output_path):
         print('Error: Dir does not exist')
         return
     if not os.path.isfile(input_file):
         print('Error: Provided file does not exist')
         return
     if not input_file.endswith(audio_formats) and not input_file.endswith(text_formats):
-        print(f'Error: Wrong file format, please provide one of these: {audio_formats}, {text_formats}')
+        print(f'Error: Wrong file format, please provide one of these: {audio_formats} or {text_formats}')
         return
     
     
