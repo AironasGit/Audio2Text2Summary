@@ -3,6 +3,11 @@ import argparse
 import whisper
 from transformers import pipeline
 
+def read_file(path):
+    with open(path, 'r', encoding="utf-8") as f:
+        data = f.read()
+    return data
+
 def write_result(path, file_name, data):
     print('Writing results...')
     with open(f'{path}/{file_name}.txt', 'w', encoding="utf-8") as f:
@@ -39,21 +44,26 @@ def main():
 
     if not os.path.exists(args.outputPath):
         print('Error: Dir does not exist')
-        quit()
+        return
     if not os.path.isfile(input_file):
         print('Error: Provided file does not exist')
-        quit()
-    if not input_file.endswith(audio_formats):
-        print(f'Error: Wrong file format, please provide one of these: {audio_formats}')
-        quit()
+        return
+    if not input_file.endswith(audio_formats) and not input_file.endswith(text_formats):
+        print(f'Error: Wrong file format, please provide one of these: {audio_formats}, {text_formats}')
+        return
+    
     
     if input_file.endswith(audio_formats):
         text = audio2text(input_file)
         write_result(output_path, f'{input_file_name}_text', text)
         summary = text2summary(text)
         write_result(output_path, f'{input_file_name}_summary', summary)
+        print('Done!')
     elif input_file.endswith(text_formats):
-        text2summary()
+        text = read_file(input_file)
+        summary = text2summary(text)
+        write_result(output_path, f'{input_file_name}_summary', summary)
+        print('Done!')
         
     
 if __name__ == '__main__':
