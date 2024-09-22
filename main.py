@@ -3,27 +3,28 @@ import argparse
 import whisper
 from transformers import pipeline
 
-def read_file(path):
+def read_file(path) -> str:
     with open(path, 'r', encoding="utf-8") as f:
         data = f.read()
+        f.close()
     return data
 
-def write_result(path, file_name, data):
+def write_result(path, file_name, data) -> None:
     print('Writing results...')
     with open(f'{path}/{file_name}.txt', 'w', encoding="utf-8") as f:
         f.write(data)
         f.close()
 
-def text2summary(text):
-    model_name= "LukasStankevicius/t5-base-lithuanian-news-summaries-175"
-    print('Loading text to summary model...')
+def text2summary(text) -> str:
+    model_name= 'LukasStankevicius/t5-base-lithuanian-news-summaries-175'
+    print('Loading "t5-base-lithuanian-news-summaries-175" model...')
     my_pipeline = pipeline(task="text2text-generation", model=model_name, framework="pt")
     print('Summarizing...')
     summary = my_pipeline(text)[0]['generated_text']
     return summary
     
-def audio2text(audio_path):
-    print('Loading audio to text model...')
+def audio2text(audio_path) -> str:
+    print('Loading "Whisper" speech recognition model...')
     model = whisper.load_model('large')
     print('Transcribing...')
     result = model.transcribe(audio_path)
@@ -41,7 +42,7 @@ def main():
     input_file = args.inputFile
     input_file_name = os.path.basename(args.inputFile).rsplit('.')[0]
     output_path = args.outputPath
-
+    
     if output_path == None:
         output_path = os.getcwd()
     if not os.path.exists(output_path):
