@@ -26,4 +26,4 @@ python main.py -inputFile [file path] -outputPath [dir path]
 -outputPath
 ```
 * Accepts a path to a directory where the generated text and summary will be placed
-* If no outputPath is not provided the current working directory will be used
+* If outputPath is not provided the current working directory will be used
