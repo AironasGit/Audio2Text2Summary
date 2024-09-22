@@ -1,5 +1,5 @@
 # Audio to text to summary for Lithuanian language
- Script that uses [Whisper](https://github.com/openai/whisper) model to turn audio into text and [LukasStankevicius/t5-base-lithuanian-news-summaries-175](https://huggingface.co/LukasStankevicius/t5-base-lithuanian-news-summaries-175) model to create a summary of the generated text
+ Script that uses [Whisper](https://github.com/openai/whisper) model to transcribe audio into text and [LukasStankevicius/t5-base-lithuanian-news-summaries-175](https://huggingface.co/LukasStankevicius/t5-base-lithuanian-news-summaries-175) model to create a summary of the transcribed text
 
 ## Setup
 ```
@@ -25,5 +25,5 @@ python main.py -inputFile [file path] -outputPath [dir path]
 ```
 -outputPath
 ```
-* Accepts a path to a directory where the generated text and summary will be placed
+* Accepts a path to a directory where the transcribed text and summary will be placed
 * If outputPath is not provided the current working directory will be used
